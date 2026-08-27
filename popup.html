@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Adobe Stock AI Metadata</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">AS</div>
+      <div>
+        <strong>Adobe Stock AI</strong>
+        <span>Metadata Assistant</span>
+      </div>
+    </div>
+    <button id="settingsBtn" class="icon-btn" title="Settings">⚙</button>
+  </header>
+
+  <main>
+    <section id="settings" class="card settings hidden">
+      <div class="section-title">AI Provider</div>
+      <label>Provider</label>
+      <select id="provider">
+        <option value="openai">OpenAI</option>
+        <option value="gemini">Google AI Studio (Gemini)</option>
+        <option value="auto">Auto — OpenAI → Gemini fallback</option>
+      </select>
+
+      <div id="openaiSettings">
+        <label>OpenAI API key</label>
+        <div class="key-row">
+          <input id="apiKey" type="password" placeholder="sk-..." autocomplete="off">
+          <button id="showKey" class="small-btn">Show</button>
+        </div>
+        <label>OpenAI model</label>
+        <input id="model" type="text" value="gpt-4.1-mini">
+      </div>
+
+      <div id="geminiSettings">
+        <label>Google AI Studio API key</label>
+        <div class="key-row">
+          <input id="geminiApiKey" type="password" placeholder="AIza..." autocomplete="off">
+          <button id="showGeminiKey" class="small-btn">Show</button>
+        </div>
+        <label>Gemini model</label>
+        <input id="geminiModel" type="text" value="gemini-3.1-flash-lite">
+        <p class="hint">If the selected model is busy, the extension automatically tries Gemini 3.6 Flash, 3.5 Flash, then 3.5 Flash-Lite.</p>
+      </div>
+      <p class="hint">Keys are stored only in this browser's extension storage. Never share your extension folder or API keys.</p>
+
+      <div class="row">
+        <div>
+          <label>Asset type</label>
+          <select id="assetType">
+            <option>Vector</option>
+            <option>Photo</option>
+            <option>Illustration</option>
+            <option>3D</option>
+            <option>Video</option>
+          </select>
+        </div>
+        <div>
+          <label>Category</label>
+          <input id="category" type="text" value="Auto">
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Keywords</label>
+          <select id="keywordCount">
+            <option value="49" selected>49</option>
+            <option value="40">40</option>
+            <option value="30">30</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+        <div>
+          <label>Language</label>
+          <select id="language">
+            <option>English</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="saveSettings" class="primary">Save Settings</button>
+      <button id="testApi" class="secondary">Test API</button>
+      <div id="settingsStatus" class="status"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">Selected Adobe Stock file</div>
+      <div id="selection" class="selection">
+        <div class="spinner"></div>
+        <span>Checking selected image…</span>
+      </div>
+
+      <div class="actions">
+        <button id="refresh" class="secondary">Refresh Selection</button>
+        <button id="generate" class="primary">Generate & Apply</button>
+      </div>
+      <div id="status" class="status"></div>
+    </section>
+
+    <section id="resultCard" class="card hidden">
+      <div class="section-title">Generated metadata</div>
+      <label>Title</label>
+      <textarea id="resultTitle" rows="3" readonly></textarea>
+      <label>Keywords</label>
+      <textarea id="resultKeywords" rows="7" readonly></textarea>
+      <div class="result-footer">
+        <span id="keywordCounter">0 keywords</span>
+        <button id="copyResult" class="small-btn">Copy</button>
+      </div>
+    </section>
+
+    <section class="note">
+      <strong>Workflow:</strong> select one upload tile on Adobe Stock → open this extension → Generate & Apply.
+    </section>
+  </main>
+
+<script src="popup.js"></script>
+</body>
+</html>
